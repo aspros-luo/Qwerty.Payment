@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.AliPay", "1.AliPay", "{3A649DDB-30D3-437E-B063-7C539BD7DA04}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.WeixinPay", "2.WeixinPay", "{CAFC78BB-8801-4785-83EA-1C17FBEB5E7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.AliApy.Sdk", "Payment.AliApy.Sdk\Payment.AliApy.Sdk.csproj", "{0A20AE8E-9589-4787-884A-66F0CA0F3B4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.WxPay.Sdk", "Payment.WxPay.Sdk\Payment.WxPay.Sdk.csproj", "{824496B2-D137-4738-8EE5-32FE55CE0B7D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A20AE8E-9589-4787-884A-66F0CA0F3B4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A20AE8E-9589-4787-884A-66F0CA0F3B4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A20AE8E-9589-4787-884A-66F0CA0F3B4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A20AE8E-9589-4787-884A-66F0CA0F3B4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{824496B2-D137-4738-8EE5-32FE55CE0B7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{824496B2-D137-4738-8EE5-32FE55CE0B7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{824496B2-D137-4738-8EE5-32FE55CE0B7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{824496B2-D137-4738-8EE5-32FE55CE0B7D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0A20AE8E-9589-4787-884A-66F0CA0F3B4D} = {3A649DDB-30D3-437E-B063-7C539BD7DA04}
+		{824496B2-D137-4738-8EE5-32FE55CE0B7D} = {CAFC78BB-8801-4785-83EA-1C17FBEB5E7F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C34F6AFC-AD34-4B0E-B2CA-D16E1FF17D11}
+	EndGlobalSection
+EndGlobal
