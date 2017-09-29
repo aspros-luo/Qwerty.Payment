@@ -15,7 +15,7 @@ namespace Payment.AliApy.Sdk.Infrastructure
         /// 加签
         /// </summary>
         /// <returns></returns>
-        private static string RasSign(string content, string privateKey, SignType signType)
+        public static string RasSign(string content, string privateKey, SignType signType)
         {
             var singerType = "";
             if (signType == SignType.Rsa2)
@@ -38,7 +38,7 @@ namespace Payment.AliApy.Sdk.Infrastructure
         /// 验签
         /// </summary>
         /// <returns></returns>
-        private static bool VerifySign(string content, string publicKey, string signData, SignType signType)
+        public static bool VerifySign(string content, string publicKey, string signData, SignType signType)
         {
             var singerType = "";
             if (signType == SignType.Rsa2)

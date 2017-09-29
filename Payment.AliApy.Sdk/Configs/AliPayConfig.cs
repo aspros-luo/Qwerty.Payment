@@ -1,11 +1,11 @@
 ﻿namespace Payment.AliApy.Sdk.Configs
 {
-    public class AliPayConfig
+    public static class AliPayConfig
     {
-        public string Gateway { get; set; }
-        public string PayMethod { get; set; }
-        public string PrivateKey { get; set; }
-        public string AliPublickKey { get; set; }
-        public string NotifyUrl { get; set; }
+        public static string Gateway { get; set; }
+        public static string PayMethod { get; set; }
+        public static string PrivateKey { get; set; } = @"MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCB9fUn8mimNFdpaDuzSHIFOhOhYvqaA2LfwCE4meOliJMlvudZ/ZYqruqB3DgOQuRMUc1ondzc6YujnqoMlYbvmCQJ88SPJ+PGAku+OdDSmMpBDihFk9JhhDjXBNqmPN9d6yM3g2/6WzYIlWhuxelB9PEoH8P5J0iJtbIiGM0kCrP9q0P9pqIPFGz7CvjD1m4HpoUZKI3k19KUE5qKNI6EM8HIQ57iFV+G6TfBaKZ1pPUoH3eYg96wHwKdR8uv8Q3O1/sIrSN4npracP58s/ztCiBCdcgNoeSYRv/HPbLIp7eEi7L2ACgn5E1eBE2VnP27/Bb7XylSzGNc/8jym43TAgMBAAECggEASwyUVEtCb6iOSgqtXy0Y2zfcmjgka8hE0t2K0brcoX0rLIL/6xHsJB36wp8/p8ytNf2PVzjCkLg1sXkwzi+TSs1bEnw5KEpq2K/+uY19sAAX3FWmn/draHEIufLNqW5Bt2TQY4B9q9/8ZhyRwFZ+C1693OPrMfijhRLuGY6k+Ih2R/i7Wif9nTUHAMtCXeGJXdtVyL1Rj+FeD1JVJV1eseYCdOia0NH3j0vG+F6lpjl8TYyOxY/4I9sHrql7qZOSHKfFanScb2zlYKgwTx6+W6UVDAd8op2bQJF84qmtm/ucG6kmZ5ind7pDvydGmlMfmUrer/iCRJPLbMnA414lYQKBgQDh0M46RFQwHucIC3A2qEQVX06BvVmsuVBX108W/NXqo48XMVKZoJ+AeuZQrtTz2MmAMS2sL3DvLp0AsC2UiWc1ykRuzZ3S5wMEe0HLZ4mg3tgGek3UvLMMy+F1C2A8iO517y4z44MytKQ0gMCByMDW49lrSt4go0P1eC026SYzmwKBgQCTVRciTJkNSp/l7ndjCP9nnFbaIwIK1+BLZX4YRe+Hs9vtjK4AjTpzlNfaZTYwQncxi4ktKql0roXW1weOsywpNuc4nAS6ugyLhmSXDK0MbIwdX3gFbhzCdnjZzpWw+n1yLswNCQ00wtOu5kEefTumZtuo3q6p+o/GdgeTzTV+KQKBgC1tVA9kr4r+rHtx0aEtOIUUJzbyYJfer8r8BW0ab+5D+QUxZuyA45V1I+AXS7/CXMbtHcMFyDJVrj/1MTYwbhLkHeAsfRNwZasBILtKmOVD7zFeaUnirCJm4XQqVbHX2iDffOvzWPFaZa4qOI/jUufn7lUnOohWT9WR14a0YHsBAoGAd63DIQV/viBESw6uxC/m6E9C7edKHWzGsfg7uZP1wxIDMK/6GFCgjor13F4i6ojTMdfbEml5RWMPLTl21iANW11R7dYusU+4KQ5+X4TYfSMfniyS3jZX/k8mVCdPyXdwt3P0JRKZO6aXNZeshgvMjJs5C6/3yfPTHq958EHdliECgYAc1xNwxZv3O+wbd+nJUJ0srLOFLdDadKZh20Of8zdj+fNtXf0HfNwSqoIZ+vFWxRbkM2xmmcgufxl3wsz/Y0iGyzKGtCE4JTfYnfhZiWQCsLoZE4XLxxY7CQfSKMhvcJdKkrQK3rionrDEeCTGyrHsoGNuEfP+Fvnbb8rr7QWtlA==";
+        public static string AliPublickKey { get; set; } =@"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxM7oKRmjEgFibOmLYgRfLvf3lwlFA6XJyUGMfgvhx3sZp+Aa37HxHuuYQyXvt8iRrspKeKrZMbWeSkseOFIlspoKfPER9SeN5hXpW+eRJT1LH5j+7HnYj8D1ZxGq5NtCgGbExUoXaEsPOvOoOTpZTxjdNXzTIvdF4+Nx7Hh9rtitdNG/IllSvFEtTih7qRmE6FoJjb+YPSY1ElWTM3yM2JHumUSmz6+2HZ+2KIUqdVzQD/fURZscyNaATIyjxI/IEMaP1LGjnAGDZlIiHTuI8OHYI0jDai9DC3aAQDUH8POWxzXMBJ1s1UaDf8tGqbcMdBP0vPMvwuQHLsDli4BIhQIDAQAB";
+        public static string NotifyUrl { get; set; }
     }
 }

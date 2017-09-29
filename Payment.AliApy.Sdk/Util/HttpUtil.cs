@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace Payment.AliApy.Sdk.HttpUtil
+namespace Payment.AliApy.Sdk.Util
 {
     public class HttpUtil
     {
@@ -25,5 +26,20 @@ namespace Payment.AliApy.Sdk.HttpUtil
                 return response;
             }
         }
+
+        //public string DoPost(string url, IDictionary<string, string> parameters, string charset)
+        //{
+        //    var req = GetWebRequest(url, "POST");
+        //    req.ContentType = "application/x-www-form-urlencoded;charset=" + charset;
+
+        //    var postData = Encoding.GetEncoding(charset).GetBytes(BuildQuery(parameters, charset));
+        //    var reqStream = req.GetRequestStream();
+        //    reqStream.Write(postData, 0, postData.Length);
+        //    reqStream.Close();
+
+        //    var rsp = (HttpWebResponse)req.GetResponse();
+        //    var encoding = Encoding.GetEncoding(rsp.CharacterSet);
+        //    return GetResponseAsString(rsp, encoding);
+        //}
     }
 }
