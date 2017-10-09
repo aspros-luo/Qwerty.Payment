@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Payment.AliPay.Sdk.Model
 {
-    public class AliPageModel
+    public class AliPayCommonModel
     {
         public string app_id { get; private set; } = "2016081900289736";
         public string method { get; private set; } = "alipay.trade.page.pay";
@@ -22,7 +22,7 @@ namespace Payment.AliPay.Sdk.Model
             method = payMethod;
         }
 
-        public void SetBizContent(PagePayModel pay)
+        public void SetBizContent(AliPayModel pay)
         {
             var str = pay.GetType().GetProperties().OrderBy(o=>o.Name).Aggregate("", (current, item) => current + $"\"{item.Name}\":\"{item.GetValue(pay)}\",");
             biz_content ="{"+ str.Substring(0,str.Length-1)+"}";

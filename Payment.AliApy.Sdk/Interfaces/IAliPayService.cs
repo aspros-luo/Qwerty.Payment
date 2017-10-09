@@ -5,11 +5,11 @@ namespace Payment.AliPay.Sdk.Interfaces
 {
     public interface IAliPayService
     {
-        Task<string> PagePay(PagePayModel payModel);
+        Task<string> PagePay(AliPayModel payModel);
 
-        Task<string> AppPay(PagePayModel payModel);
+        Task<string> AppPay(AliPayModel payModel);
 
-        Task<string> JsApiPay(PagePayModel payModel);
+        Task<string> JsApiPay(AliPayModel payModel);
 
     }
 }

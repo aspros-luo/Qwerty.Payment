@@ -15,11 +15,11 @@ namespace Payment.AliPay.Sdk.Services
 {
     public class AliPayService : IAliPayService
     {
-        public async Task<string> PagePay(PagePayModel payModel)
+        public async Task<string> PagePay(AliPayModel payModel)
         {
             payModel.SetProductCode("FAST_INSTANT_TRADE_PAY");
 
-            var common = new AliPageModel();
+            var common = new AliPayCommonModel();
             common.SetMethod("alipay.trade.page.pay");
             common.SetBizContent(payModel);
             var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
@@ -39,10 +39,10 @@ namespace Payment.AliPay.Sdk.Services
         }
         
 
-        public async Task<string> AppPay(PagePayModel payModel)
+        public async Task<string> AppPay(AliPayModel payModel)
         {
             payModel.SetProductCode("QUICK_MSECURITY_PAY");
-            var common = new AliPageModel();
+            var common = new AliPayCommonModel();
             common.SetMethod("alipay.trade.app.pay");
             common.SetBizContent(payModel);
             var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
@@ -53,10 +53,10 @@ namespace Payment.AliPay.Sdk.Services
             return UrlEncoder.Default.Encode(str)+$"&sign={sign}";
         }
 
-        public async Task<string> JsApiPay(PagePayModel payModel)
+        public async Task<string> JsApiPay(AliPayModel payModel)
         {
             payModel.SetProductCode("QUICK_WAP_WAY");
-            var common = new AliPageModel();
+            var common = new AliPayCommonModel();
             common.SetMethod("alipay.trade.wap.pay");
             common.SetBizContent(payModel);
             var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());

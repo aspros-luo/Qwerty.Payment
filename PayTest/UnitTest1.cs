@@ -19,7 +19,7 @@ namespace PayTest
         [Fact]
         public async void Test1()
         {
-            var payModel = new PagePayModel
+            var payModel = new AliPayModel
             {
                 out_trade_no = $"{DateTime.Now:yyyyMMddHHmmss}",
                 subject = $"PC Test Pay",
@@ -33,7 +33,7 @@ namespace PayTest
         [Fact]
         public async void Test2()
         {
-            var payModel = new PagePayModel
+            var payModel = new AliPayModel
             {
                 out_trade_no = $"{DateTime.Now:yyyyMMddHHmmss}",
                 subject = $"÷ß∏∂≤‚ ‘{DateTime.Now:yyyyMMddHHmmss}",
@@ -46,7 +46,7 @@ namespace PayTest
         [Fact]
         public async void Test3()
         {
-            var payModel = new PagePayModel
+            var payModel = new AliPayModel
             {
                 out_trade_no = $"{DateTime.Now:yyyyMMddHHmmss}",
                 subject = $"JSAPI Test Pay",
