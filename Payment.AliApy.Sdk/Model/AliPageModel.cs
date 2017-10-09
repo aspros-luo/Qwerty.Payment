@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace Payment.AliApy.Sdk.Model
+namespace Payment.AliPay.Sdk.Model
 {
     public class AliPageModel
     {
@@ -16,6 +16,11 @@ namespace Payment.AliApy.Sdk.Model
         public string version { get; private set; } = "1.0";
         public string notify_url { get;private set; }= "www.aqsea.com";
         public string biz_content { get; private set; }
+
+        public void SetMethod(string payMethod)
+        {
+            method = payMethod;
+        }
 
         public void SetBizContent(PagePayModel pay)
         {

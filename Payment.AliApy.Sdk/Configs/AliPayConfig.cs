@@ -1,4 +1,4 @@
-﻿namespace Payment.AliApy.Sdk.Configs
+﻿namespace Payment.AliPay.Sdk.Configs
 {
     public static class AliPayConfig
     {

@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.AliPay", "1.AliPay", "{3A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.WeixinPay", "2.WeixinPay", "{CAFC78BB-8801-4785-83EA-1C17FBEB5E7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.AliApy.Sdk", "Payment.AliApy.Sdk\Payment.AliApy.Sdk.csproj", "{0A20AE8E-9589-4787-884A-66F0CA0F3B4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.AliPay.Sdk", "Payment.AliApy.Sdk\Payment.AliPay.Sdk.csproj", "{0A20AE8E-9589-4787-884A-66F0CA0F3B4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.WxPay.Sdk", "Payment.WxPay.Sdk\Payment.WxPay.Sdk.csproj", "{824496B2-D137-4738-8EE5-32FE55CE0B7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.WxPay.Sdk", "Payment.WxPay.Sdk\Payment.WxPay.Sdk.csproj", "{824496B2-D137-4738-8EE5-32FE55CE0B7D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Test", "3.Test", "{C6609794-1B5D-4C14-AC4D-7CC311E89660}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayTest", "PayTest\PayTest.csproj", "{D779508B-9026-4ADE-A73C-1653BD37087D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayTest", "PayTest\PayTest.csproj", "{D779508B-9026-4ADE-A73C-1653BD37087D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

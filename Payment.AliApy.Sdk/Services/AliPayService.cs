@@ -1,34 +1,34 @@
-﻿using Payment.AliApy.Sdk.Interfaces;
+﻿using Payment.AliPay.Sdk.Configs;
+using Payment.AliPay.Sdk.Infrastructure;
+using Payment.AliPay.Sdk.Interfaces;
+using Payment.AliPay.Sdk.Model;
+using Payment.AliPay.Sdk.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Payment.AliApy.Sdk.Configs;
-using Payment.AliApy.Sdk.Infrastructure;
-using Payment.AliApy.Sdk.Model;
-using Payment.AliApy.Sdk.Util;
-using Payment.AliApy.Sdk.ValueObjects;
 
-namespace Payment.AliApy.Sdk.Services
+namespace Payment.AliPay.Sdk.Services
 {
-    public class AliPayService:IAliPayService
+    public class AliPayService : IAliPayService
     {
-
-        public async Task<string> Pay(PagePayModel payModel)
+        public async Task<string> PagePay(PagePayModel payModel)
         {
-            var common=new AliPageModel();
+            payModel.SetProductCode("FAST_INSTANT_TRADE_PAY");
+
+            var common = new AliPageModel();
+            common.SetMethod("alipay.trade.page.pay");
             common.SetBizContent(payModel);
-            var parameters= common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
-            var str= BuildParamStr(parameters);
-            var sign = GenerateRsaAssist.RasSign(str, Configs.AliPayConfig.PrivateKey, SignType.Rsa2);
-            parameters.Add("sign",sign);
+            var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
+            var str = BuildData.BuildParamStr(parameters);
+            var sign = GenerateRsaAssist.RasSign(str, AliPayConfig.PrivateKey, SignType.Rsa2);
+            parameters.Add("sign", sign);
             try
             {
-               var from=  BuildHtmlRequest(parameters, "post", "post");
-                //var response = await HttpUtil.CreatePostHttpResponse("https://openapi.alipaydev.com/gateway.do?charset=utf-8", parameters, Encoding.UTF8);
-                //return await response.Content.ReadAsStringAsync();
+                var from = BuildData.BuildHtmlRequest(parameters, "post", "post");
                 return from;
             }
             catch (Exception e)
@@ -37,49 +37,42 @@ namespace Payment.AliApy.Sdk.Services
                 throw;
             }
         }
+        
 
-        public string BuildHtmlRequest(IDictionary<string, string> sParaTemp, string strMethod, string strButtonValue)
+        public async Task<string> AppPay(PagePayModel payModel)
         {
-            //待请求参数数组
-            IDictionary<string, string> dicPara = new Dictionary<string, string>();
-            dicPara = sParaTemp;
-
-            StringBuilder sbHtml = new StringBuilder();
-            //sbHtml.Append("<head><meta http-equiv=\"Content-Type\" content=\"text/html\" charset= \"" + charset + "\" /></head>");
-
-            sbHtml.Append("<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipaydev.com/gateway.do?charset=utf-8' method='" + strMethod + "'>");
-            ;
-            foreach (KeyValuePair<string, string> temp in dicPara)
-            {
-                sbHtml.Append("<input  name='" + temp.Key + "' value='" + temp.Value + "'/>");
-            }
-
-            //submit按钮控件请不要含有name属性
-            sbHtml.Append("<input type='submit' value='" + strButtonValue + "' style='display:none;'></form>");
-            // sbHtml.Append("<input type='submit' value='" + strButtonValue + "'></form></div>");
-
-            //表单实现自动提交
-            sbHtml.Append("<script>document.forms['alipaysubmit'].submit();</script>");
-
-            return sbHtml.ToString();
+            payModel.SetProductCode("QUICK_MSECURITY_PAY");
+            var common = new AliPageModel();
+            common.SetMethod("alipay.trade.app.pay");
+            common.SetBizContent(payModel);
+            var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
+            var str = BuildData.BuildParamStr(parameters);
+            var sign = GenerateRsaAssist.RasSign(str, AliPayConfig.PrivateKey, SignType.Rsa2);
+            sign= UrlEncoder.Default.Encode(sign);
+            
+            return UrlEncoder.Default.Encode(str)+$"&sign={sign}";
         }
 
-        public static string BuildParamStr(Dictionary<string, string> param)
+        public async Task<string> JsApiPay(PagePayModel payModel)
         {
-            if (param == null || param.Count == 0)
+            payModel.SetProductCode("QUICK_WAP_WAY");
+            var common = new AliPageModel();
+            common.SetMethod("alipay.trade.wap.pay");
+            common.SetBizContent(payModel);
+            var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
+            var str = BuildData.BuildParamStr(parameters);
+            var sign = GenerateRsaAssist.RasSign(str, AliPayConfig.PrivateKey, SignType.Rsa2);
+            parameters.Add("sign", sign);
+            try
             {
-                return "";
+                var from = BuildData.BuildHtmlRequest(parameters, "post", "post");
+                return from;
             }
-            var ascDic = param.OrderBy(o => o.Key).ToDictionary(o => o.Key, p => p.Value);
-            var sb = new StringBuilder();
-            foreach (var item in ascDic)
+            catch (Exception e)
             {
-                if (!string.IsNullOrEmpty(item.Value))
-                {
-                    sb.Append(item.Key).Append("=").Append(item.Value).Append("&");
-                }
+                Console.WriteLine(e);
+                throw;
             }
-            return sb.ToString().Substring(0, sb.ToString().Length - 1);
         }
     }
 }

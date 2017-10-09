@@ -1,4 +1,4 @@
-﻿namespace Payment.AliApy.Sdk.ValueObjects
+﻿namespace Payment.AliPay.Sdk.ValueObjects
 {
     public enum SignType
     {

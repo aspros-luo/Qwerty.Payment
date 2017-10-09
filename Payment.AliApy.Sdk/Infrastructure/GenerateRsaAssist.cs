@@ -1,10 +1,10 @@
 ﻿using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Security;
+using Payment.AliPay.Sdk.ValueObjects;
 using System;
 using System.Text;
-using Payment.AliApy.Sdk.ValueObjects;
 
-namespace Payment.AliApy.Sdk.Infrastructure
+namespace Payment.AliPay.Sdk.Infrastructure
 {
     /// <summary>
     /// Rsa 工具类
