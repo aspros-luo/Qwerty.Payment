@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Payment.AliPay.Sdk.Configs;
 
 namespace Payment.AliPay.Sdk.Infrastructure
 {
@@ -12,7 +13,7 @@ namespace Payment.AliPay.Sdk.Infrastructure
             var dicPara = sParaTemp;
             var sbHtml = new StringBuilder();
             //sbHtml.Append("<head><meta http-equiv=\"Content-Type\" content=\"text/html\" charset= \"" + charset + "\" /></head>");
-            sbHtml.Append("<form id='alipaysubmit' name='alipaysubmit' action='https://openapi.alipaydev.com/gateway.do?charset=utf-8' method='" + strMethod + "'>");
+            sbHtml.Append("<form id='alipaysubmit' name='alipaysubmit' action='"+AliPayConfig.Gateway+"?charset=utf-8' method='" + strMethod + "'>");
             foreach (var temp in dicPara)
             {
                 sbHtml.Append("<input  name='" + temp.Key + "' value='" + temp.Value + "'/>");

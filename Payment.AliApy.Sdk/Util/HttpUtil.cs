@@ -15,7 +15,7 @@ namespace Payment.AliPay.Sdk.Util
         //    return true; //总是接受     
         //}
 
-        public static async Task<HttpResponseMessage> CreatePostHttpResponse(string url, IDictionary<string, string> parameters, Encoding charset)
+        public static async Task<HttpResponseMessage> CreatePostHttpResponse(string url, IDictionary<string, string> parameters)
         {
             var listKeyValues = parameters.Keys.Select(key => new KeyValuePair<string, string>(key, parameters[key])).ToList();
             using (var client = new HttpClient())
@@ -25,20 +25,5 @@ namespace Payment.AliPay.Sdk.Util
                 return response;
             }
         }
-
-        //public string DoPost(string url, IDictionary<string, string> parameters, string charset)
-        //{
-        //    var req = GetWebRequest(url, "POST");
-        //    req.ContentType = "application/x-www-form-urlencoded;charset=" + charset;
-
-        //    var postData = Encoding.GetEncoding(charset).GetBytes(BuildQuery(parameters, charset));
-        //    var reqStream = req.GetRequestStream();
-        //    reqStream.Write(postData, 0, postData.Length);
-        //    reqStream.Close();
-
-        //    var rsp = (HttpWebResponse)req.GetResponse();
-        //    var encoding = Encoding.GetEncoding(rsp.CharacterSet);
-        //    return GetResponseAsString(rsp, encoding);
-        //}
     }
 }

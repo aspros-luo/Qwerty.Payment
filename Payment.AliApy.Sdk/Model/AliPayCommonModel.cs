@@ -28,6 +28,18 @@ namespace Payment.AliPay.Sdk.Model
             biz_content ="{"+ str.Substring(0,str.Length-1)+"}";
         }
 
+        public void SetBizContent(AliRefundModel refund)
+        {
+            var str = refund.GetType().GetProperties().OrderBy(o => o.Name).Aggregate("", (current, item) => current + $"\"{item.Name}\":\"{item.GetValue(refund)}\",");
+            biz_content = "{" + str.Substring(0, str.Length - 1) + "}";
+        }
+
+        public void SetBizContent(AliRefundQueryModel refundQuery)
+        {
+            var str = refundQuery.GetType().GetProperties().OrderBy(o => o.Name).Aggregate("", (current, item) => current + $"\"{item.Name}\":\"{item.GetValue(refundQuery)}\",");
+            biz_content = "{" + str.Substring(0, str.Length - 1) + "}";
+        }
+
         public void SetReturn(string url)
         {
             return_url = url;
