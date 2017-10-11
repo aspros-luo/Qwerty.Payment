@@ -2,6 +2,7 @@
 using Payment.WxPay.Sdk.Interfaces;
 using System;
 using System.Threading.Tasks;
+using Payment.WxPay.Sdk.Model;
 using ZXing;
 using ZXing.QrCode;
 using ZXing.QrCode.Internal;
@@ -10,7 +11,7 @@ namespace Payment.WxPay.Sdk.Services
 {
     public class WxPayService:IWxPayService
     {
-        public async Task<string> PagePay()
+        public async Task<string> PagePay(NativeWxPayModel wxPayModel)
         {
             NativePay nativePay = new NativePay();
 
@@ -18,7 +19,7 @@ namespace Payment.WxPay.Sdk.Services
             //string url1 = nativePay.GetPrePayUrl("123456789");
 
             //生成扫码支付模式二url
-            var url2 = nativePay.GetPayUrl("123456789");
+            var url2 = nativePay.GetPayUrl(wxPayModel);
 
             //将url生成二维码图片
             var writerSvg = new BarcodeWriterSvg

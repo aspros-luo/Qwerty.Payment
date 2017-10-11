@@ -2,7 +2,7 @@
 
 namespace Payment.WxPay.Sdk.Lib
 {
-    public class WxPayApi
+    internal class WxPayApi
     {
         /**
         * 提交被扫支付API

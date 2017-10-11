@@ -4,6 +4,7 @@ using Payment.AliPay.Sdk.Model;
 using Payment.AliPay.Sdk.Services;
 using System;
 using System.Text;
+using Payment.WxPay.Sdk.Model;
 using Payment.WxPay.Sdk.Services;
 using Xunit;
 using Xunit.Abstractions;
@@ -91,7 +92,14 @@ namespace PayTest
         public async void Test6()
         {
             WxPayService a = new WxPayService();
-            var s = await a.PagePay();
+            var wxPayModel = new NativeWxPayModel
+            {
+                Body = "Ferragamo小手包",
+                OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
+                TotalFee = 10,
+                ProductId = $"Ferragamo小手包{DateTime.Now:yyyyMMddHHmmss}"
+            };
+            var s = await a.PagePay(wxPayModel);
             Assert.NotNull(s);
         }
     }

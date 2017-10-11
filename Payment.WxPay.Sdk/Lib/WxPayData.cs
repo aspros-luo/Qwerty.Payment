@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace Payment.WxPay.Sdk.Lib
 {
-    public class WxPayData
+    internal class WxPayData
     {
         public WxPayData()
         {

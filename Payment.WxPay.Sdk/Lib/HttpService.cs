@@ -6,7 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Payment.WxPay.Sdk.Lib
 {
-    public class HttpService
+    internal class HttpService
     {
         public static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {

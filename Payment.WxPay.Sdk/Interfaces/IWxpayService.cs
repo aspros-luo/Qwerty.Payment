@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Payment.WxPay.Sdk.Model;
 
 namespace Payment.WxPay.Sdk.Interfaces
 {
     public interface IWxPayService
     {
-        Task<string> PagePay();
+        Task<string> PagePay(NativeWxPayModel wxPayModel);
 
         Task<string> AppPay();
 
