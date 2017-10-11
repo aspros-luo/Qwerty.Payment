@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Payment.AliApy.Sdk\Payment.AliPay.Sdk.csproj" />
+    <ProjectReference Include="..\Payment.WxPay.Sdk\Payment.WxPay.Sdk.csproj" />
   </ItemGroup>
 
 </Project>

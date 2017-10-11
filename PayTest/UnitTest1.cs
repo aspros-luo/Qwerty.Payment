@@ -4,6 +4,7 @@ using Payment.AliPay.Sdk.Model;
 using Payment.AliPay.Sdk.Services;
 using System;
 using System.Text;
+using Payment.WxPay.Sdk.Services;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -83,6 +84,14 @@ namespace PayTest
             };
             AliPayService a = new AliPayService();
             var s = await a.AliRefundQuery(refundModel);
+            Assert.NotNull(s);
+        }
+
+        [Fact]
+        public async void Test6()
+        {
+            WxPayService a = new WxPayService();
+            var s = await a.PagePay();
             Assert.NotNull(s);
         }
     }
