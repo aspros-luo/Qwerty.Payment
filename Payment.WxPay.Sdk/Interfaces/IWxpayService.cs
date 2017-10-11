@@ -12,7 +12,7 @@ namespace Payment.WxPay.Sdk.Interfaces
 
         Task<string> AppPay();
 
-        Task<string> JsApiPay();
+        Task<string> JsApiPay(JsApiWxPayModel wxPayModel);
 
         //Task<AliRefundResponse> AliRefund(AliRefundModel refundModel);
 

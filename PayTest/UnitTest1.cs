@@ -102,5 +102,20 @@ namespace PayTest
             var s = await a.PagePay(wxPayModel);
             Assert.NotNull(s);
         }
+
+        [Fact]
+        public async void Test7()
+        {
+            WxPayService a = new WxPayService();
+            var wxPayModel = new JsApiWxPayModel
+            {
+                Body = "FerragamoÐ¡ÊÖ°ü",
+                OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
+                TotalFee = 1,
+                OpenId = "oMWn8suwRBasY_1MAfrVutfnASQk"
+            };
+            var s = await a.JsApiPay(wxPayModel);
+            Assert.NotNull(s);
+        }
     }
 }
