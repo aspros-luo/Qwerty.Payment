@@ -14,6 +14,8 @@ namespace Payment.WxPay.Sdk.Interfaces
 
         Task<string> JsApiPay(JsApiWxPayModel wxPayModel);
 
+        Task<string> MwebPay(NativeWxPayModel wxPayModel);
+
         //Task<AliRefundResponse> AliRefund(AliRefundModel refundModel);
 
         //Task<AliRefundQueryResponse> AliRefundQuery(AliRefundQueryModel refundQueryModel);

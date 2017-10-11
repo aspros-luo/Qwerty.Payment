@@ -39,9 +39,16 @@ namespace Payment.WxPay.Sdk.Services
         public async Task<string> JsApiPay(JsApiWxPayModel wxPayModel)
         {
             var jsApiPay = new JsApiPay();
-            var unifiedOrderResult = jsApiPay.GetUnifiedOrderResult(wxPayModel);
+            jsApiPay.GetUnifiedOrderResult(wxPayModel);
             var wxJsApiParam = jsApiPay.GetJsApiParameters();//获取H5调起JS API参数    
             return wxJsApiParam;
+        }
+
+        public async Task<string> MwebPay(NativeWxPayModel wxPayModel)
+        {
+            var mwebPay=new MwebPay();
+            var data= mwebPay.GetPayUrl(wxPayModel);
+            return data.GetValue("mweb_url").ToString();
         }
     }
 }

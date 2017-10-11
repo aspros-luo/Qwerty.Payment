@@ -96,7 +96,7 @@ namespace PayTest
             {
                 Body = "Ferragamo小手包",
                 OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                TotalFee = 10,
+                TotalFee = 1,
                 ProductId = $"Ferragamo小手包{DateTime.Now:yyyyMMddHHmmss}"
             };
             var s = await a.PagePay(wxPayModel);
@@ -115,6 +115,21 @@ namespace PayTest
                 OpenId = "oMWn8suwRBasY_1MAfrVutfnASQk"
             };
             var s = await a.JsApiPay(wxPayModel);
+            Assert.NotNull(s);
+        }
+
+        [Fact]
+        public async void Test8()
+        {
+            WxPayService a = new WxPayService();
+            var wxPayModel = new NativeWxPayModel
+            {
+                Body = "Ferragamo小手包",
+                OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
+                TotalFee = 1,
+                ProductId = $"Ferragamo小手包{DateTime.Now:yyyyMMddHHmmss}"
+            };
+            var s = await a.MwebPay(wxPayModel);
             Assert.NotNull(s);
         }
     }
