@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Payment.WxPay.Sdk.Model
+﻿namespace Payment.WxPay.Sdk.Model
 {
     /// <summary>
     /// 微信扫码支付模型

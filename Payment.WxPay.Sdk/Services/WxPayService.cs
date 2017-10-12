@@ -1,8 +1,8 @@
 ﻿using Payment.WxPay.Sdk.Business;
 using Payment.WxPay.Sdk.Interfaces;
+using Payment.WxPay.Sdk.Model;
 using System;
 using System.Threading.Tasks;
-using Payment.WxPay.Sdk.Model;
 using ZXing;
 using ZXing.QrCode;
 using ZXing.QrCode.Internal;
@@ -49,6 +49,18 @@ namespace Payment.WxPay.Sdk.Services
             var mwebPay=new MwebPay();
             var data= mwebPay.GetPayUrl(wxPayModel);
             return data.GetValue("mweb_url").ToString();
+        }
+
+        public async Task<string> AliRefund(WxRefundModel refundModel)
+        {
+            var result= WxRefund.Run(refundModel);
+            return result;
+        }
+
+        public async Task<string> AliRefundQuery(WxRefundQueryModel refundQueryModel)
+        {
+            var result = WxRefundQuery.Run(refundQueryModel);
+            return result;
         }
     }
 }
