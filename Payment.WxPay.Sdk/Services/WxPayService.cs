@@ -1,7 +1,6 @@
 ﻿using Payment.WxPay.Sdk.Business;
 using Payment.WxPay.Sdk.Interfaces;
 using Payment.WxPay.Sdk.Model;
-using System;
 using System.Threading.Tasks;
 using ZXing;
 using ZXing.QrCode;
@@ -31,9 +30,12 @@ namespace Payment.WxPay.Sdk.Services
             return svgImageData.ToString();
         }
 
-        public Task<string> AppPay()
+        public async Task<string> AppPay(AppPayModel wxPayModel)
         {
-            throw new NotImplementedException();
+            var appPay=new AppPay();
+            var result= appPay.Run(wxPayModel);
+            
+            return result.ToJson();
         }
 
         public async Task<string> JsApiPay(JsApiWxPayModel wxPayModel)

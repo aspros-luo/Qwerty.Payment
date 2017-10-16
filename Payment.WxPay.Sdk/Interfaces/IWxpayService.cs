@@ -7,7 +7,7 @@ namespace Payment.WxPay.Sdk.Interfaces
     {
         Task<string> PagePay(NativeWxPayModel wxPayModel);
 
-        Task<string> AppPay();
+        Task<string> AppPay(AppPayModel wxPayModel);
 
         Task<string> JsApiPay(JsApiWxPayModel wxPayModel);
 

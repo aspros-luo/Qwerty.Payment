@@ -9,7 +9,7 @@ namespace Payment.AliPay.Sdk.Interfaces
     {
         Task<string> PagePay(AliPayModel payModel);
 
-        Task<string> AppPay(AliPayModel payModel);
+        Task<string> AppPay(string signParams);
 
         Task<string> JsApiPay(AliPayModel payModel);
 

@@ -1,17 +1,16 @@
-﻿using Payment.AliPay.Sdk.Configs;
+﻿using Newtonsoft.Json;
+using Payment.AliPay.Sdk.Configs;
 using Payment.AliPay.Sdk.Infrastructure;
 using Payment.AliPay.Sdk.Interfaces;
 using Payment.AliPay.Sdk.Model;
+using Payment.AliPay.Sdk.Response;
 using Payment.AliPay.Sdk.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Payment.AliPay.Sdk.Response;
 
 namespace Payment.AliPay.Sdk.Services
 {
@@ -35,24 +34,22 @@ namespace Payment.AliPay.Sdk.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return e.Message;
             }
         }
         
 
-        public async Task<string> AppPay(AliPayModel payModel)
+        public async Task<string> AppPay(string signParams)
         {
-            payModel.SetProductCode("QUICK_MSECURITY_PAY");
-            var common = new AliPayCommonModel();
-            common.SetMethod("alipay.trade.app.pay");
-            common.SetBizContent(payModel);
-            var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
-            var str = BuildData.BuildParamStr(parameters);
-            var sign = GenerateRsaAssist.RasSign(str, AliPayConfig.PrivateKey, SignType.Rsa2);
-            sign= UrlEncoder.Default.Encode(sign);
-            
-            return UrlEncoder.Default.Encode(str)+$"&sign={sign}";
+            //payModel.SetProductCode("QUICK_MSECURITY_PAY");
+            //var common = new AliPayCommonModel();
+            //common.SetMethod("alipay.trade.app.pay");
+            //common.SetBizContent(payModel);
+            //var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
+            //var str = BuildData.BuildParamStr(parameters);
+            var sign = GenerateRsaAssist.RasSign(signParams, AliPayConfig.PrivateKey, SignType.Rsa2);
+            //return UrlEncoder.Default.Encode(str)+$"&sign={sign}";
+            return UrlEncoder.Default.Encode(sign);
         }
 
         public async Task<string> JsApiPay(AliPayModel payModel)
@@ -72,8 +69,7 @@ namespace Payment.AliPay.Sdk.Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                return e.Message;
             }
         }
 
@@ -148,7 +144,7 @@ namespace Payment.AliPay.Sdk.Services
             }
             catch (Exception e)
             {
-                return "";
+                return e.Message;
             }
         }
     }

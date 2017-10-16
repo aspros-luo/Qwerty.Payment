@@ -132,5 +132,19 @@ namespace PayTest
             var s = await a.MwebPay(wxPayModel);
             Assert.NotNull(s);
         }
+
+        [Fact]
+        public async void Test9()
+        {
+            WxPayService a = new WxPayService();
+            var wxPayModel = new AppPayModel()
+            {
+                Body = "FerragamoÐ¡ÊÖ°ü",
+                OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
+                TotalFee = 1,
+            };
+            var s = await a.AppPay(wxPayModel);
+            Assert.NotNull(s);
+        }
     }
 }
