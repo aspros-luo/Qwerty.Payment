@@ -28,7 +28,9 @@ namespace PayTest
             {
                 out_trade_no = $"{DateTime.Now:yyyyMMddHHmmss}",
                 subject = $"PC Test Pay",
-                total_amount = "0.01"
+                total_amount = "0.01",
+                passback_params = "中文测试",
+                body = "123,321"
             };
             AliPayService a=new AliPayService();
             var s= await a.PagePay(payModel);
@@ -55,7 +57,9 @@ namespace PayTest
             {
                 out_trade_no = $"{DateTime.Now:yyyyMMddHHmmss}",
                 subject = $"JSAPI Test Pay",
-                total_amount = "0.01"
+                total_amount = "0.01",
+                passback_params = "中文测试",
+                body = "123,321"
             };
             AliPayService a = new AliPayService();
             var s = await a.JsApiPay(payModel);
