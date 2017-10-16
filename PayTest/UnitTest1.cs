@@ -45,7 +45,7 @@ namespace PayTest
                 total_amount = "0.01"
             };
             AliPayService a = new AliPayService();
-            var s = await a.AppPay(payModel);
+            var s = await a.AppPay("");
             Assert.NotNull(s);
         }
         [Fact]
