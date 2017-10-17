@@ -377,7 +377,7 @@ namespace Payment.WxPay.Sdk.Lib
 
             var start = DateTime.Now;
 
-            string response = HttpService.Post(xml, url, false, timeOut);
+            string response =HttpService.Post(xml, url, false, timeOut);
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);

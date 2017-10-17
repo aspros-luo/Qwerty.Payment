@@ -100,7 +100,7 @@ namespace PayTest
             {
                 Body = "Ferragamo小手包",
                 OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                TotalFee = 5,
+                TotalFee = 1,
                 ProductId = $"Ferragamo小手包{DateTime.Now:yyyyMMddHHmmss}"
             };
             var s = await a.PagePay(wxPayModel);
@@ -115,7 +115,7 @@ namespace PayTest
             {
                 Body = "Ferragamo小手包",
                 OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                TotalFee = 5,
+                TotalFee = 1,
                 OpenId = "oMWn8suwRBasY_1MAfrVutfnASQk"
             };
             var s = await a.JsApiPay(wxPayModel);
@@ -148,6 +148,36 @@ namespace PayTest
                 TotalFee = 1,
             };
             var s = await a.AppPay(wxPayModel);
+            Assert.NotNull(s);
+        }
+
+        [Fact]
+        public async void Test10()
+        {
+            WxPayService a = new WxPayService();
+            var wxRefundModel = new WxRefundModel()
+            {
+                TransactionId = "4200000002201710178600074446",
+                TotalFee = 1,
+                OutRefundNo = $"{DateTime.Now:yyyyMMddHHmmss}",
+                RefundFee = 1,
+                OutTradeNo = "20171017135151"
+            };
+            var s = await a.WeChatRefund(wxRefundModel);
+            Assert.NotNull(s);
+        }
+
+        [Fact]
+        public async void Test11()
+        {
+            WxPayService a = new WxPayService();
+            var wxRefundModel = new WxRefundQueryModel()
+            {
+                TransactionId = "4200000002201710178600074446",
+                OutRefundNo = "20171017151007",
+                OutTradeNo = "20171017135151"
+            };
+            var s = await a.WeChatRefundQuery(wxRefundModel);
             Assert.NotNull(s);
         }
     }

@@ -19,4 +19,8 @@
     <ProjectReference Include="..\Payment.WxPay.Sdk\Payment.WxPay.Sdk.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Cert\" />
+  </ItemGroup>
+
 </Project>
