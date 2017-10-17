@@ -100,7 +100,7 @@ namespace PayTest
             {
                 Body = "Ferragamo小手包",
                 OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                TotalFee = 1,
+                TotalFee = 5,
                 ProductId = $"Ferragamo小手包{DateTime.Now:yyyyMMddHHmmss}"
             };
             var s = await a.PagePay(wxPayModel);
@@ -115,7 +115,7 @@ namespace PayTest
             {
                 Body = "Ferragamo小手包",
                 OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                TotalFee = 1,
+                TotalFee = 5,
                 OpenId = "oMWn8suwRBasY_1MAfrVutfnASQk"
             };
             var s = await a.JsApiPay(wxPayModel);
