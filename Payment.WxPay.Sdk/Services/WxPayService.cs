@@ -6,6 +6,8 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Payment.WxPay.Sdk.Response;
 using ZXing;
 using ZXing.QrCode;
 using ZXing.QrCode.Internal;
@@ -57,16 +59,19 @@ namespace Payment.WxPay.Sdk.Services
             return data.GetValue("mweb_url").ToString();
         }
 
-        public async Task<string> WeChatRefund(WxRefundModel refundModel)
+        public async Task<WeChatRefundResponse> WeChatRefund(WxRefundModel refundModel)
         {
             var result = WxRefund.Run(refundModel);
-            return result;
+            var response = JsonConvert.DeserializeObject<WeChatRefundResponse>(result.ToJson());
+            return response;
         }
 
-        public async Task<string> WeChatRefundQuery(WxRefundQueryModel refundQueryModel)
+        public async Task<WeChatRefundQueryResponse> WeChatRefundQuery(WxRefundQueryModel refundQueryModel)
         {
             var result = WxRefundQuery.Run(refundQueryModel);
-            return result;
+            var response = JsonConvert.DeserializeObject<WeChatRefundQueryResponse>(result.ToJson());
+
+            return response;
         }
 
         public async Task<string> WeChatNotify(Stream weChatReturnData)

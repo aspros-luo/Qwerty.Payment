@@ -13,7 +13,7 @@ namespace Payment.WxPay.Sdk.Business
         * @param refund_fee 退款金额
         * @return 退款结果（xml格式）
         */
-        public static string Run(WxRefundModel refundModel)
+        public static WxPayData Run(WxRefundModel refundModel)
         {
             //Log.Info("Refund", "Refund is processing...");
 
@@ -35,7 +35,7 @@ namespace Payment.WxPay.Sdk.Business
             WxPayData result = WxPayApi.Refund(data); //提交退款申请给API，接收返回数据
 
             //Log.Info("Refund", "Refund process complete, result : " + result.ToXml());
-            return result.ToPrintStr();
+            return result;
         }
     }
 }

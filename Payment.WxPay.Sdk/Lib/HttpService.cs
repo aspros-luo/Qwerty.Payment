@@ -24,9 +24,9 @@ namespace Payment.WxPay.Sdk.Lib
         {
             if (isUseCert)
             {
-                var str = @"\Cert\apiclient_cert.p12";
+                
                 //商户私钥证书，用于对请求报文进行签名
-                var tempSignCert = new X509Certificate2(AppContext.BaseDirectory.Substring(0, AppContext.BaseDirectory.IndexOf("bin")) + str, "password");
+                var tempSignCert = new X509Certificate2(WxPayConfig.SSLCERT_PATH,WxPayConfig.SSLCERT_PASSWORD);
 
                 var handler = new HttpClientHandler
                 {

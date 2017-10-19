@@ -13,7 +13,7 @@ namespace Payment.WxPay.Sdk.Business
         * @param out_trade_no 商户订单号
         * @return 退款查询结果（xml格式）
         */
-        public static string Run(WxRefundQueryModel refundQueryModel)
+        public static WxPayData Run(WxRefundQueryModel refundQueryModel)
         {
             //Log.Info("RefundQuery", "RefundQuery is processing...");
 
@@ -38,7 +38,7 @@ namespace Payment.WxPay.Sdk.Business
             WxPayData result = WxPayApi.RefundQuery(data);//提交退款查询给API，接收返回数据
 
             //Log.Info("RefundQuery", "RefundQuery process complete, result : " + result.ToXml());
-            return result.ToPrintStr();
+            return result;
         }
     }
 }

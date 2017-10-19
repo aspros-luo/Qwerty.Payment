@@ -26,11 +26,10 @@ namespace PayTest
            
             var payModel = new AliPayModel
             {
-                out_trade_no = $"{DateTime.Now:yyyyMMddHHmmss}",
+                out_trade_no = $"1000",
                 subject = $"PC Test Pay",
                 total_amount = "0.01",
-                passback_params = "中文测试",
-                body = "123,321"
+                passback_params = "1000,1001",
             };
             AliPayService a=new AliPayService();
             var s= await a.PagePay(payModel);
@@ -59,7 +58,6 @@ namespace PayTest
                 subject = $"JSAPI Test Pay",
                 total_amount = "0.01",
                 passback_params = "中文测试",
-                body = "123,321"
             };
             AliPayService a = new AliPayService();
             var s = await a.JsApiPay(payModel);
@@ -157,11 +155,11 @@ namespace PayTest
             WxPayService a = new WxPayService();
             var wxRefundModel = new WxRefundModel()
             {
-                TransactionId = "4200000002201710178600074446",
+                TransactionId = "4200000019201710198995362432",
                 TotalFee = 1,
                 OutRefundNo = $"{DateTime.Now:yyyyMMddHHmmss}",
                 RefundFee = 1,
-                OutTradeNo = "20171017135151"
+                OutTradeNo = "20171019135422"
             };
             var s = await a.WeChatRefund(wxRefundModel);
             Assert.NotNull(s);
@@ -173,9 +171,10 @@ namespace PayTest
             WxPayService a = new WxPayService();
             var wxRefundModel = new WxRefundQueryModel()
             {
-                TransactionId = "4200000002201710178600074446",
-                OutRefundNo = "20171017151007",
-                OutTradeNo = "20171017135151"
+                TransactionId = "4200000019201710198995362432",
+                OutRefundNo = "20171019140347",
+                OutTradeNo = "20171019135422",
+                RefundId = "50000004672017101902070658945"
             };
             var s = await a.WeChatRefundQuery(wxRefundModel);
             Assert.NotNull(s);

@@ -1,6 +1,7 @@
 ﻿using Payment.WxPay.Sdk.Model;
 using System.IO;
 using System.Threading.Tasks;
+using Payment.WxPay.Sdk.Response;
 
 namespace Payment.WxPay.Sdk.Interfaces
 {
@@ -14,9 +15,9 @@ namespace Payment.WxPay.Sdk.Interfaces
 
         Task<string> MwebPay(NativeWxPayModel wxPayModel);
 
-        Task<string> WeChatRefund(WxRefundModel refundModel);
+        Task<WeChatRefundResponse> WeChatRefund(WxRefundModel refundModel);
 
-        Task<string> WeChatRefundQuery(WxRefundQueryModel refundQueryModel);
+        Task<WeChatRefundQueryResponse> WeChatRefundQuery(WxRefundQueryModel refundQueryModel);
 
         Task<string> WeChatNotify(Stream weChatReturnData);
     }
