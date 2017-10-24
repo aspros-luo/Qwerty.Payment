@@ -1,8 +1,11 @@
 ﻿using Payment.WxPay.Sdk.Lib;
-using Payment.WxPay.Sdk.Model;
+using System.Threading.Tasks;
 
 namespace Payment.WxPay.Sdk.Business
 {
+    /// <summary>
+    /// 微信退款查询
+    /// </summary>
     internal class WxRefundQuery
     {
         /***
@@ -13,32 +16,27 @@ namespace Payment.WxPay.Sdk.Business
         * @param out_trade_no 商户订单号
         * @return 退款查询结果（xml格式）
         */
-        public static WxPayData Run(WxRefundQueryModel refundQueryModel)
+        public static async Task<string> Run(string refundId, string outRefundNo, string transactionId, string outTradeNo)
         {
-            //Log.Info("RefundQuery", "RefundQuery is processing...");
-
-            WxPayData data = new WxPayData();
-            if (!string.IsNullOrEmpty(refundQueryModel.RefundId))
+            var data = new WxPayData();
+            if (!string.IsNullOrEmpty(refundId))
             {
-                data.SetValue("refund_id", refundQueryModel.RefundId);//微信退款单号，优先级最高
+                data.SetValue("refund_id", refundId);//微信退款单号，优先级最高
             }
-            else if (!string.IsNullOrEmpty(refundQueryModel.OutRefundNo))
+            else if (!string.IsNullOrEmpty(outRefundNo))
             {
-                data.SetValue("out_refund_no", refundQueryModel.OutRefundNo);//商户退款单号，优先级第二
+                data.SetValue("out_refund_no", outRefundNo);//商户退款单号，优先级第二
             }
-            else if (!string.IsNullOrEmpty(refundQueryModel.TransactionId))
+            else if (!string.IsNullOrEmpty(transactionId))
             {
-                data.SetValue("transaction_id", refundQueryModel.TransactionId);//微信订单号，优先级第三
+                data.SetValue("transaction_id", transactionId);//微信订单号，优先级第三
             }
             else
             {
-                data.SetValue("out_trade_no", refundQueryModel.OutTradeNo);//商户订单号，优先级最低
+                data.SetValue("out_trade_no", outTradeNo);//商户订单号，优先级最低
             }
-
-            WxPayData result = WxPayApi.RefundQuery(data);//提交退款查询给API，接收返回数据
-
-            //Log.Info("RefundQuery", "RefundQuery process complete, result : " + result.ToXml());
-            return result;
+            var result = await WxPayApi.RefundQuery(data);//提交退款查询给API，接收返回数据
+            return result.ToJson();
         }
     }
 }

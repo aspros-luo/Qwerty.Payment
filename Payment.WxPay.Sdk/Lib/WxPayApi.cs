@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Payment.WxPay.Sdk.Lib
 {
@@ -13,7 +14,7 @@ namespace Payment.WxPay.Sdk.Lib
         * @throws WxPayException
         * @return 成功时返回调用结果，其他抛异常
         */
-        public static WxPayData Micropay(WxPayData inputObj, int timeOut = 10)
+        public static async Task<WxPayData> Micropay(WxPayData inputObj, int timeOut = 10)
         {
             string url = "https://api.mch.weixin.qq.com/pay/micropay";
             //检测必填参数
@@ -43,8 +44,8 @@ namespace Payment.WxPay.Sdk.Lib
 
             var start = DateTime.Now;//请求开始时间
 
-            string response = HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口以提交数据到API
-            
+            string response = await HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口以提交数据到API
+
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
@@ -67,7 +68,7 @@ namespace Payment.WxPay.Sdk.Lib
         * @throws WxPayException
         * @return 成功时返回订单查询结果，其他抛异常
         */
-        public static WxPayData OrderQuery(WxPayData inputObj, int timeOut = 6)
+        public static async Task<WxPayData> OrderQuery(WxPayData inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/orderquery";
             //检测必填参数
@@ -85,7 +86,7 @@ namespace Payment.WxPay.Sdk.Lib
 
             var start = DateTime.Now;
 
-            string response = HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口提交数据
+            string response = await HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口提交数据
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
@@ -108,7 +109,7 @@ namespace Payment.WxPay.Sdk.Lib
         * @throws WxPayException
         * @return 成功时返回API调用结果，其他抛异常
         */
-        public static WxPayData Reverse(WxPayData inputObj, int timeOut = 6)
+        public static async Task<WxPayData> Reverse(WxPayData inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/secapi/pay/reverse";
             //检测必填参数
@@ -126,7 +127,7 @@ namespace Payment.WxPay.Sdk.Lib
             var start = DateTime.Now;//请求开始时间
 
 
-            string response = HttpService.Post(xml, url, true, timeOut);
+            string response = await HttpService.Post(xml, url, true, timeOut);
 
 
             var end = DateTime.Now;
@@ -149,7 +150,7 @@ namespace Payment.WxPay.Sdk.Lib
         * @throws WxPayException
         * @return 成功时返回接口调用结果，其他抛异常
         */
-        public static WxPayData Refund(WxPayData inputObj, int timeOut = 6)
+        public static async Task<WxPayData> Refund(WxPayData inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
             //检测必填参数
@@ -182,7 +183,7 @@ namespace Payment.WxPay.Sdk.Lib
             string xml = inputObj.ToXml();
             var start = DateTime.Now;
 
-            string response = HttpService.Post(xml, url, true, timeOut);//调用HTTP通信接口提交数据到API
+            string response = await HttpService.Post(xml, url, true, timeOut);//调用HTTP通信接口提交数据到API
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
@@ -208,7 +209,7 @@ namespace Payment.WxPay.Sdk.Lib
 	    * @throws WxPayException
 	    * @return 成功时返回，其他抛异常
 	    */
-        public static WxPayData RefundQuery(WxPayData inputObj, int timeOut = 6)
+        public static async Task<WxPayData> RefundQuery(WxPayData inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/refundquery";
             //检测必填参数
@@ -227,7 +228,7 @@ namespace Payment.WxPay.Sdk.Lib
 
             var start = DateTime.Now;//请求开始时间
 
-            string response = HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口以提交数据到API
+            string response = await HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口以提交数据到API
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);//获得接口耗时
@@ -249,7 +250,7 @@ namespace Payment.WxPay.Sdk.Lib
         * @throws WxPayException
         * @return 成功时返回，其他抛异常
         */
-        public static WxPayData DownloadBill(WxPayData inputObj, int timeOut = 6)
+        public static async Task<WxPayData> DownloadBill(WxPayData inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/downloadbill";
             //检测必填参数
@@ -265,7 +266,7 @@ namespace Payment.WxPay.Sdk.Lib
 
             string xml = inputObj.ToXml();
 
-            string response = HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口以提交数据到API
+            string response = await HttpService.Post(xml, url, false, timeOut);//调用HTTP通信接口以提交数据到API
 
             WxPayData result = new WxPayData();
             //若接口调用失败会返回xml格式的结果
@@ -291,7 +292,7 @@ namespace Payment.WxPay.Sdk.Lib
 	    * @throws WxPayException
 	    * @return 成功时返回，其他抛异常
 	    */
-        public static WxPayData ShortUrl(WxPayData inputObj, int timeOut = 6)
+        public static async Task<WxPayData> ShortUrl(WxPayData inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/tools/shorturl";
             //检测必填参数
@@ -308,7 +309,7 @@ namespace Payment.WxPay.Sdk.Lib
 
             var start = DateTime.Now;//请求开始时间
 
-            string response = HttpService.Post(xml, url, false, timeOut);
+            string response = await HttpService.Post(xml, url, false, timeOut);
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);
@@ -329,7 +330,7 @@ namespace Payment.WxPay.Sdk.Lib
         * @throws WxPayException
         * @return 成功时返回，其他抛异常
         */
-        public static WxPayData UnifiedOrder(WxPayData inputObj, int timeOut = 6)
+        public static async Task<WxPayData> UnifiedOrder(WxPayData inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
             //检测必填参数
@@ -377,7 +378,7 @@ namespace Payment.WxPay.Sdk.Lib
 
             var start = DateTime.Now;
 
-            string response =HttpService.Post(xml, url, false, timeOut);
+            string response = await HttpService.Post(xml, url, false, timeOut);
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);
@@ -399,7 +400,7 @@ namespace Payment.WxPay.Sdk.Lib
 	    * @throws WxPayException
 	    * @return 成功时返回，其他抛异常
 	    */
-        public static WxPayData CloseOrder(WxPayData inputObj, int timeOut = 6)
+        public static async Task<WxPayData> CloseOrder(WxPayData inputObj, int timeOut = 6)
         {
             string url = "https://api.mch.weixin.qq.com/pay/closeorder";
             //检测必填参数
@@ -416,7 +417,7 @@ namespace Payment.WxPay.Sdk.Lib
 
             var start = DateTime.Now;//请求开始时间
 
-            string response = HttpService.Post(xml, url, false, timeOut);
+            string response = await HttpService.Post(xml, url, false, timeOut);
 
             var end = DateTime.Now;
             int timeCost = (int)((end - start).TotalMilliseconds);
@@ -437,7 +438,7 @@ namespace Payment.WxPay.Sdk.Lib
 	    * @param int timeCost 接口耗时
 	    * @param WxPayData inputObj参数数组
 	    */
-        private static void ReportCostTime(string interfaceUrl, int timeCost, WxPayData inputObj)
+        private static async void ReportCostTime(string interfaceUrl, int timeCost, WxPayData inputObj)
         {
             //如果不需要进行上报
 
@@ -490,7 +491,7 @@ namespace Payment.WxPay.Sdk.Lib
 
             try
             {
-                Report(data);
+                await Report(data);
             }
             catch (Exception)
             {
@@ -507,7 +508,7 @@ namespace Payment.WxPay.Sdk.Lib
 	    * @throws WxPayException
 	    * @return 成功时返回测速上报接口返回的结果，其他抛异常
 	    */
-        public static WxPayData Report(WxPayData inputObj, int timeOut = 1)
+        public static async Task<WxPayData> Report(WxPayData inputObj, int timeOut = 1)
         {
             string url = "https://api.mch.weixin.qq.com/payitil/report";
             //检测必填参数
@@ -540,7 +541,7 @@ namespace Payment.WxPay.Sdk.Lib
             inputObj.SetValue("sign", inputObj.MakeSign());//签名
             string xml = inputObj.ToXml();
 
-            string response = HttpService.Post(xml, url, false, timeOut);
+            string response = await HttpService.Post(xml, url, false, timeOut);
 
             WxPayData result = new WxPayData();
             result.FromXml(response);

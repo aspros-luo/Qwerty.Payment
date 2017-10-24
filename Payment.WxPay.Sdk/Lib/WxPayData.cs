@@ -86,7 +86,7 @@ namespace Payment.WxPay.Sdk.Lib
                 }
                 else//除了string和int类型不能含有其他数据类型
                 {
-                    
+
                     throw new Exception("WxPayData字段数据类型错误!");
                 }
             }
@@ -120,7 +120,7 @@ namespace Payment.WxPay.Sdk.Lib
             try
             {
                 //2015-06-29 错误是没有签名
-                if (m_values["return_code"] != "SUCCESS")
+                if (m_values["return_code"].ToString() != "SUCCESS")
                 {
                     return m_values;
                 }
@@ -178,13 +178,13 @@ namespace Payment.WxPay.Sdk.Lib
             {
                 if (pair.Value == null)
                 {
-                    
+
                     throw new Exception("WxPayData内部含有值为null的字段!");
                 }
 
                 str += string.Format("{0}={1}<br>", pair.Key, pair.Value.ToString());
             }
-            
+
             return str;
         }
 
@@ -220,13 +220,13 @@ namespace Payment.WxPay.Sdk.Lib
             //如果没有设置签名，则跳过检测
             if (!IsSet("sign"))
             {
-                
+
                 throw new Exception("WxPayData签名存在但不合法!");
             }
             //如果设置了签名但是签名为空，则抛异常
             else if (GetValue("sign") == null || GetValue("sign").ToString() == "")
             {
-                
+
                 throw new Exception("WxPayData签名存在但不合法!");
             }
 
@@ -241,7 +241,7 @@ namespace Payment.WxPay.Sdk.Lib
                 return true;
             }
 
-            
+
             throw new Exception("WxPayData签名验证错误!");
         }
 

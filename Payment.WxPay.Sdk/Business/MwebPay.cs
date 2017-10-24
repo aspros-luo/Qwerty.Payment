@@ -1,38 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Payment.WxPay.Sdk.Lib;
-using Payment.WxPay.Sdk.Model;
+﻿using Payment.WxPay.Sdk.Lib;
+using System;
+using System.Threading.Tasks;
 
 namespace Payment.WxPay.Sdk.Business
 {
+    /// <summary>
+    /// 微信H5支付
+    /// </summary>
     internal class MwebPay
     {
-        public WxPayData GetPayUrl(NativeWxPayModel wxPayModel)
+        public async Task<WxPayData> GetPayUrl(string body, string outTradeNo, int totalFee, string ip)
         {
-            //Log.Info(this.GetType().ToString(), "Native pay mode 2 url is producing...");
-
-            WxPayData data = new WxPayData();
-            data.SetValue("body", wxPayModel.Body);//商品描述
-            //data.SetValue("attach", wxPayModel.Body);//附加数据
-            data.SetValue("out_trade_no", wxPayModel.OutTradeNo);//随机字符串
-            data.SetValue("total_fee", wxPayModel.TotalFee);//总金额
+            var data = new WxPayData();
+            data.SetValue("body", body);//商品描述
+            //data.SetValue("attach", outTradeIds);//附加数据
+            data.SetValue("out_trade_no", outTradeNo);//随机字符串
+            data.SetValue("total_fee", totalFee);//总金额
             data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));//交易起始时间
             data.SetValue("time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));//交易结束时间
             //data.SetValue("goods_tag", "jjj");//商品标记
             data.SetValue("trade_type", "MWEB");//交易类型
-            data.SetValue("spbill_create_ip", "115.236.186.130");//终端ip	  	    
-            WxPayData result = WxPayApi.UnifiedOrder(data);//调用统一下单接口
-            //string url = result.GetValue("code_url").ToString();//获得统一下单接口返回的二维码链接
+            data.SetValue("spbill_create_ip", ip);//终端ip	 
 
-            //Log.Info(this.GetType().ToString(), "Get native pay mode 2 url : " + url);
+            var result = await WxPayApi.UnifiedOrder(data);//调用统一下单接口
             return result;
         }
 
         public string GetJsApiParameters(WxPayData unifiedOrderResult)
         {
-            //Log.Debug(this.GetType().ToString(), "JsApiPay::GetJsApiParam is processing...");
-
             WxPayData jsApiParam = new WxPayData();
             jsApiParam.SetValue("appId", unifiedOrderResult.GetValue("appid"));
             jsApiParam.SetValue("timeStamp", WxPayApi.GenerateTimeStamp());
@@ -42,8 +37,6 @@ namespace Payment.WxPay.Sdk.Business
             jsApiParam.SetValue("paySign", jsApiParam.MakeSign());
 
             string parameters = jsApiParam.ToJson();
-
-            //Log.Debug(this.GetType().ToString(), "Get jsApiParam : " + parameters);
             return parameters;
         }
     }

@@ -2,10 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Payment.AliPay.Sdk.Interfaces;
 using Payment.AliPay.Sdk.Model;
 using Payment.AliPay.Sdk.Services;
+using Payment.WxPay.Sdk.Services;
 using System;
 using System.Text;
-using Payment.WxPay.Sdk.Model;
-using Payment.WxPay.Sdk.Services;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -26,13 +25,13 @@ namespace PayTest
            
             var payModel = new AliPayModel
             {
-                out_trade_no = $"1000",
-                subject = $"PC Test Pay",
+                out_trade_no = $"{DateTime.Now:yyyyMMddHHmmss}",
+                subject = $"支付测试",
                 total_amount = "0.01",
-                passback_params = "1000,1001",
             };
             AliPayService a=new AliPayService();
-            var s= await a.PagePay(payModel);
+            var s= a.NativePay(payModel);
+
             Assert.NotNull(s);
         }
 
@@ -46,7 +45,7 @@ namespace PayTest
                 total_amount = "0.01"
             };
             AliPayService a = new AliPayService();
-            var s = await a.AppPay("");
+            var s = a.AppPay("ssss");
             Assert.NotNull(s);
         }
         [Fact]
@@ -57,10 +56,9 @@ namespace PayTest
                 out_trade_no = $"{DateTime.Now:yyyyMMddHHmmss}",
                 subject = $"JSAPI Test Pay",
                 total_amount = "0.01",
-                passback_params = "中文测试",
             };
             AliPayService a = new AliPayService();
-            var s = await a.JsApiPay(payModel);
+            var s = a.JsApiPay(payModel);
             Assert.NotNull(s);
         }
 
@@ -69,7 +67,8 @@ namespace PayTest
         {
             var refundModel = new AliRefundModel()
             {
-                out_trade_no = "20171010165857",
+                out_trade_no = "10005",
+                trade_no = "2017102321001004720230769658",
                 refund_amount = 0.01M
             };
             AliPayService a = new AliPayService();
@@ -94,14 +93,8 @@ namespace PayTest
         public async void Test6()
         {
             WxPayService a = new WxPayService();
-            var wxPayModel = new NativeWxPayModel
-            {
-                Body = "Ferragamo小手包",
-                OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                TotalFee = 1,
-                ProductId = $"Ferragamo小手包{DateTime.Now:yyyyMMddHHmmss}"
-            };
-            var s = await a.PagePay(wxPayModel);
+            
+            var s = await a.PagePay("","",0,"");
             Assert.NotNull(s);
         }
 
@@ -109,14 +102,7 @@ namespace PayTest
         public async void Test7()
         {
             WxPayService a = new WxPayService();
-            var wxPayModel = new JsApiWxPayModel
-            {
-                Body = "Ferragamo小手包",
-                OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                TotalFee = 1,
-                OpenId = "oMWn8suwRBasY_1MAfrVutfnASQk"
-            };
-            var s = await a.JsApiPay(wxPayModel);
+            var s = await a.JsApiPay("","",0,"");
             Assert.NotNull(s);
         }
 
@@ -124,14 +110,8 @@ namespace PayTest
         public async void Test8()
         {
             WxPayService a = new WxPayService();
-            var wxPayModel = new NativeWxPayModel
-            {
-                Body = "Ferragamo小手包",
-                OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                TotalFee = 1,
-                ProductId = $"Ferragamo小手包{DateTime.Now:yyyyMMddHHmmss}"
-            };
-            var s = await a.MwebPay(wxPayModel);
+            
+            var s = await a.MwebPay("","",0,"");
             Assert.NotNull(s);
         }
 
@@ -139,13 +119,8 @@ namespace PayTest
         public async void Test9()
         {
             WxPayService a = new WxPayService();
-            var wxPayModel = new AppPayModel()
-            {
-                Body = "Ferragamo小手包",
-                OutTradeNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                TotalFee = 1,
-            };
-            var s = await a.AppPay(wxPayModel);
+       
+            var s = await a.AppPay("","",0);
             Assert.NotNull(s);
         }
 
@@ -153,15 +128,7 @@ namespace PayTest
         public async void Test10()
         {
             WxPayService a = new WxPayService();
-            var wxRefundModel = new WxRefundModel()
-            {
-                TransactionId = "4200000019201710198995362432",
-                TotalFee = 1,
-                OutRefundNo = $"{DateTime.Now:yyyyMMddHHmmss}",
-                RefundFee = 1,
-                OutTradeNo = "20171019135422"
-            };
-            var s = await a.WeChatRefund(wxRefundModel);
+            var s = await a.WeChatRefund("","",0,0,"");
             Assert.NotNull(s);
         }
 
@@ -169,14 +136,7 @@ namespace PayTest
         public async void Test11()
         {
             WxPayService a = new WxPayService();
-            var wxRefundModel = new WxRefundQueryModel()
-            {
-                TransactionId = "4200000019201710198995362432",
-                OutRefundNo = "20171019140347",
-                OutTradeNo = "20171019135422",
-                RefundId = "50000004672017101902070658945"
-            };
-            var s = await a.WeChatRefundQuery(wxRefundModel);
+            var s = await a.WeChatRefundQuery("","","","");
             Assert.NotNull(s);
         }
     }

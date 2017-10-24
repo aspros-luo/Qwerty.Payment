@@ -1,9 +1,12 @@
 ﻿using Payment.WxPay.Sdk.Lib;
-using Payment.WxPay.Sdk.Model;
 using System;
+using System.Threading.Tasks;
 
 namespace Payment.WxPay.Sdk.Business
 {
+    /// <summary>
+    /// 微信公众号支付
+    /// </summary>
     internal class JsApiPay
     {
         /// <summary>
@@ -29,7 +32,7 @@ namespace Payment.WxPay.Sdk.Business
         /// <summary>
         /// 统一下单接口返回结果
         /// </summary>
-        public WxPayData unifiedOrderResult { get; set; }
+        private WxPayData _unifiedOrderResult { get; set; }
 
         //public JsApiPay(HttpContext page)
         //{
@@ -37,7 +40,7 @@ namespace Payment.WxPay.Sdk.Business
         //}
         public JsApiPay()
         {
-            
+
         }
 
         /**
@@ -153,28 +156,27 @@ namespace Payment.WxPay.Sdk.Business
          * @return 统一下单结果
          * @失败时抛异常WxPayException
          */
-        public WxPayData GetUnifiedOrderResult(JsApiWxPayModel jsApiWxPayModel)
+        public async Task<WxPayData> GetUnifiedOrderResult(string body, string outTradeNo, int totalFee, string openId)
         {
             //统一下单
-            WxPayData data = new WxPayData();
-            data.SetValue("body", jsApiWxPayModel.Body);
-            //data.SetValue("attach", remark);
-            data.SetValue("out_trade_no", jsApiWxPayModel.OutTradeNo);
-            data.SetValue("total_fee", jsApiWxPayModel.TotalFee);
+            var data = new WxPayData();
+            data.SetValue("body", body);
+            //data.SetValue("attach", outTradeIds);
+            data.SetValue("out_trade_no", outTradeNo);
+            data.SetValue("total_fee", totalFee);
             data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));
             data.SetValue("time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));
             //data.SetValue("goods_tag", remark);
             data.SetValue("trade_type", "JSAPI");
-            data.SetValue("openid", jsApiWxPayModel.OpenId);
+            data.SetValue("openid", openId);
 
-            WxPayData result = WxPayApi.UnifiedOrder(data);
+            var result = await WxPayApi.UnifiedOrder(data);
             if (!result.IsSet("appid") || !result.IsSet("prepay_id") || result.GetValue("prepay_id").ToString() == "")
             {
-                //Log.Error(this.GetType().ToString(), result.GetValue("err_code_des").ToString());
                 throw new Exception("UnifiedOrder response error!");
             }
 
-            unifiedOrderResult = result;
+            _unifiedOrderResult = result;
             return result;
         }
 
@@ -196,19 +198,15 @@ namespace Payment.WxPay.Sdk.Business
         */
         public string GetJsApiParameters()
         {
-            //Log.Debug(this.GetType().ToString(), "JsApiPay::GetJsApiParam is processing...");
-
             WxPayData jsApiParam = new WxPayData();
-            jsApiParam.SetValue("appId", unifiedOrderResult.GetValue("appid"));
+            jsApiParam.SetValue("appId", _unifiedOrderResult.GetValue("appid"));
             jsApiParam.SetValue("timeStamp", WxPayApi.GenerateTimeStamp());
             jsApiParam.SetValue("nonceStr", WxPayApi.GenerateNonceStr());
-            jsApiParam.SetValue("package", "prepay_id=" + unifiedOrderResult.GetValue("prepay_id"));
+            jsApiParam.SetValue("package", "prepay_id=" + _unifiedOrderResult.GetValue("prepay_id"));
             jsApiParam.SetValue("signType", "MD5");
             jsApiParam.SetValue("paySign", jsApiParam.MakeSign());
 
             string parameters = jsApiParam.ToJson();
-
-            //Log.Debug(this.GetType().ToString(), "Get jsApiParam : " + parameters);
             return parameters;
         }
     }

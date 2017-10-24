@@ -1,22 +1,42 @@
-﻿using System.Collections.Generic;
-using Payment.AliPay.Sdk.Model;
-using System.Threading.Tasks;
+﻿using Payment.AliPay.Sdk.Model;
+using Payment.AliPay.Sdk.Request;
 using Payment.AliPay.Sdk.Response;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Payment.AliPay.Sdk.Interfaces
 {
     public interface IAliPayService
     {
-        Task<string> PagePay(AliPayModel payModel);
-
-        Task<string> AppPay(string signParams);
-
-        Task<string> JsApiPay(AliPayModel payModel);
-
+        /// <summary>
+        /// page支付，支付信息组成页面表单数据，用于pc支付
+        /// </summary>
+        /// <returns></returns>
+        AliPayRequest NativePay(AliPayModel payModel);
+        /// <summary>
+        /// app支付，app端发送加签字段，返回签名数据
+        /// </summary>
+        /// <returns></returns>
+        AliPayRequest AppPay(string preSign);
+        /// <summary>
+        /// jsapi支付，用于网页支付
+        /// </summary>
+        /// <returns></returns>
+        AliPayRequest JsApiPay(AliPayModel payModel);
+        /// <summary>
+        /// 退款申请接口，用户发起退款申请
+        /// </summary>
+        /// <returns></returns>
         Task<AliRefundResponse> AliRefund(AliRefundModel refundModel);
-
+        /// <summary>
+        /// 退款查询接口，用于确认退款是否成功
+        /// </summary>
+        /// <returns></returns>
         Task<AliRefundQueryResponse> AliRefundQuery(AliRefundQueryModel refundQueryModel);
-
-        Task<string> AliNotify(Dictionary<string,string> alipayReturnData);
+        /// <summary>
+        /// 支付回掉接口
+        /// </summary>
+        /// <returns></returns>
+        AliNotifyRequest AliNotify(Stream aliReturnData);
     }
 }

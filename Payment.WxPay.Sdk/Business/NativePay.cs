@@ -1,10 +1,13 @@
 ﻿using Payment.WxPay.Sdk.Lib;
 using System;
 using System.Collections.Generic;
-using Payment.WxPay.Sdk.Model;
+using System.Threading.Tasks;
 
 namespace Payment.WxPay.Sdk.Business
 {
+    /// <summary>
+    /// 微信扫码支付
+    /// </summary>
     internal class NativePay
     {
         /**
@@ -15,7 +18,6 @@ namespace Payment.WxPay.Sdk.Business
         public string GetPrePayUrl(string productId)
         {
             //Log.Info(this.GetType().ToString(), "Native pay mode 1 url is producing...");
-
             WxPayData data = new WxPayData();
             data.SetValue("appid", WxPayConfig.APPID);//公众帐号id
             data.SetValue("mch_id", WxPayConfig.MCHID);//商户号
@@ -23,9 +25,8 @@ namespace Payment.WxPay.Sdk.Business
             data.SetValue("nonce_str", WxPayApi.GenerateNonceStr());//随机字符串
             data.SetValue("product_id", productId);//商品ID
             data.SetValue("sign", data.MakeSign());//签名
-            string str = ToUrlParams(data.GetValues());//转换为URL串
-            string url = "weixin://wxpay/bizpayurl?" + str;
-
+            var str = ToUrlParams(data.GetValues());//转换为URL串
+            var url = "weixin://wxpay/bizpayurl?" + str;
             //Log.Info(this.GetType().ToString(), "Get native pay mode 1 url : " + url);
             return url;
         }
@@ -35,22 +36,22 @@ namespace Payment.WxPay.Sdk.Business
         * @param productId 商品ID
         * @return 模式二URL
         */
-        public string GetPayUrl(NativeWxPayModel wxPayModel)
+        public async Task<string> GetPayUrl(string body, string outTradeNo, int totalFee, string productId)
         {
             //Log.Info(this.GetType().ToString(), "Native pay mode 2 url is producing...");
 
-            WxPayData data = new WxPayData();
-            data.SetValue("body", wxPayModel.Body);//商品描述
-            //data.SetValue("attach", wxPayModel.Body);//附加数据
-            data.SetValue("out_trade_no", wxPayModel.OutTradeNo);//随机字符串
-            data.SetValue("total_fee", wxPayModel.TotalFee);//总金额
+            var data = new WxPayData();
+            data.SetValue("body", body);//商品描述
+            //data.SetValue("attach", outTradeIds);//附加数据
+            data.SetValue("out_trade_no", outTradeNo);//随机字符串
+            data.SetValue("total_fee", totalFee);//总金额
             data.SetValue("time_start", DateTime.Now.ToString("yyyyMMddHHmmss"));//交易起始时间
             data.SetValue("time_expire", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));//交易结束时间
             //data.SetValue("goods_tag", "jjj");//商品标记
             data.SetValue("trade_type", "NATIVE");//交易类型
-            data.SetValue("product_id", wxPayModel.ProductId);//商品ID
+            data.SetValue("product_id", productId);//商品ID
 
-            WxPayData result = WxPayApi.UnifiedOrder(data);//调用统一下单接口
+            var result = await WxPayApi.UnifiedOrder(data);//调用统一下单接口
             string url = result.GetValue("code_url").ToString();//获得统一下单接口返回的二维码链接
 
             //Log.Info(this.GetType().ToString(), "Get native pay mode 2 url : " + url);
