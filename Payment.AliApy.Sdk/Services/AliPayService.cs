@@ -8,7 +8,6 @@ using Payment.AliPay.Sdk.Response;
 using Payment.AliPay.Sdk.Util;
 using Payment.AliPay.Sdk.ValueObjects;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -27,10 +26,13 @@ namespace Payment.AliPay.Sdk.Services
             var common = new AliPayCommonModel();
             common.SetMethod("alipay.trade.page.pay");
             common.SetBizContent(payModel);
+
             var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
             var str = BuildData.BuildParamStr(parameters);
+
             var sign = GenerateRsaAssist.RasSign(str, AliPayConfig.PrivateKey, SignType.Rsa2);
             parameters.Add("sign", sign);
+
             try
             {
                 var from = BuildData.BuildHtmlRequest(parameters, "post", "post");
@@ -67,13 +69,17 @@ namespace Payment.AliPay.Sdk.Services
         public AliPayRequest JsApiPay(AliPayModel payModel)
         {
             payModel.SetProductCode("QUICK_WAP_WAY");
+
             var common = new AliPayCommonModel();
             common.SetMethod("alipay.trade.wap.pay");
             common.SetBizContent(payModel);
+
             var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
             var str = BuildData.BuildParamStr(parameters);
+
             var sign = GenerateRsaAssist.RasSign(str, AliPayConfig.PrivateKey, SignType.Rsa2);
             parameters.Add("sign", sign);
+
             try
             {
                 var from = BuildData.BuildHtmlRequest(parameters, "post", "post");
@@ -90,12 +96,16 @@ namespace Payment.AliPay.Sdk.Services
             var common = new AliPayCommonModel();
             common.SetMethod("alipay.trade.refund");
             common.SetBizContent(refundModel);
+
             var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
             var str = BuildData.BuildParamStr(parameters);
+
             var sign = GenerateRsaAssist.RasSign(str, AliPayConfig.PrivateKey, SignType.Rsa2);
             parameters.Add("sign", sign);
+
             var response = await HttpUtil.CreatePostHttpResponse(AliPayConfig.Gateway, parameters);
             var result = await response.Content.ReadAsStringAsync();
+
             var jsonResult = JsonConvert.DeserializeObject<AliRefundResponse>(result);
             return jsonResult;
         }
@@ -119,6 +129,7 @@ namespace Payment.AliPay.Sdk.Services
         {
             try
             {
+                //获取回调参数
                 var s = aliReturnData;
                 int count;
                 var buffer = new byte[1024];
@@ -129,18 +140,21 @@ namespace Payment.AliPay.Sdk.Services
                 }
                 s.Flush();
                 s.Dispose();
-                var alipayReturnData = JsonConvert.DeserializeObject<Dictionary<string, string>>(builder.ToString());
+                //request 接收的字符串含有urlencode，这里需要decode一下
+                var alipayReturnData = builder.ToString().Split('&').ToDictionary(a => a.Split('=')[0], a => System.Net.WebUtility.UrlDecode(a.Split('=')[1]));
+                //获取sign
                 var sign = alipayReturnData["sign"];
+                //去除sign及signtype
                 alipayReturnData.Remove("sign");
                 alipayReturnData.Remove("sign_type");
-
+                //获取支付宝订单号及商户交易订单号
                 var tradeNo = alipayReturnData["trade_no"];
                 var tradeIds = alipayReturnData["out_trade_no"];
 
                 var dic = alipayReturnData.ToDictionary(d => d.Key, d => d.Value);
 
                 var preSign = BuildData.BuildParamStr(dic);
-
+                //验签
                 var result = GenerateRsaAssist.VerifySign(preSign, AliPayConfig.AliPublicKey, sign, SignType.Rsa2);
 
                 return result

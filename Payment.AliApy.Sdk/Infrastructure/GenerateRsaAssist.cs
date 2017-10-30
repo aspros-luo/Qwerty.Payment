@@ -9,7 +9,7 @@ namespace Payment.AliPay.Sdk.Infrastructure
     /// <summary>
     /// Rsa 工具类
     /// </summary>
-    public static class GenerateRsaAssist
+    internal static class GenerateRsaAssist
     {
         /// <summary>
         /// 加签

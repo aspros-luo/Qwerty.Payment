@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Payment.AliPay.Sdk.Configs;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Payment.AliPay.Sdk.Configs;
 
 namespace Payment.AliPay.Sdk.Infrastructure
 {
-    public static class BuildData
+    internal static class BuildData
     {
         public static string BuildHtmlRequest(IDictionary<string, string> sParaTemp, string strMethod, string strButtonValue)
         {

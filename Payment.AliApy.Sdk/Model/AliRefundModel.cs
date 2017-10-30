@@ -10,6 +10,9 @@
         /// 支付宝交易单号
         /// </summary>
         public string trade_no { get; set; }
+        /// <summary>
+        /// 退款金额
+        /// </summary>
         public decimal refund_amount { get; set; }
     }
 }

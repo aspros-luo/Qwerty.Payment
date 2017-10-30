@@ -1,6 +1,6 @@
 ﻿namespace Payment.AliPay.Sdk.ValueObjects
 {
-    public enum SignType
+    internal enum SignType
     {
         Rsa=1,
         Rsa2=2
