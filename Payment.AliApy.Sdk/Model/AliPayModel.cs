@@ -9,7 +9,7 @@
         /// <summary>
         /// 支付类型
         /// </summary>
-        internal string product_code { get; private set; } = "FAST_INSTANT_TRADE_PAY";
+        public string product_code { get; private set; } = "FAST_INSTANT_TRADE_PAY";
         /// <summary>
         /// 支付金额
         /// </summary>

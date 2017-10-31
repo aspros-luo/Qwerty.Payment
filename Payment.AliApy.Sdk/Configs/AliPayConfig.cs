@@ -7,12 +7,13 @@
             AppId = appId;
             PrivateKey = privateKey;
             AliPublicKey = aliPublicKey;
-            ReturnUrl = returnUrl ?? notifyUrl;
+            ReturnUrl = string.IsNullOrWhiteSpace(returnUrl) ? notifyUrl : returnUrl;
             NotifyUrl = notifyUrl;
         }
 
         public static string AppId { get; private set; }
-        public static string Gateway { get; private set; } = "https://openapi.alipay.com/gateway.do";
+        //public static string Gateway { get; private set; } = "https://openapi.alipay.com/gateway.do";
+        internal static string Gateway { get; private set; } = "https://openapi.alipaydev.com/gateway.do";
         public static string PrivateKey { get; private set; }
         public static string AliPublicKey { get; private set; }
         public static string ReturnUrl { get; private set; }
