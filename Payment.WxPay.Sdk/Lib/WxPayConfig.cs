@@ -17,16 +17,25 @@ namespace Payment.WxPay.Sdk.Lib
         * APPSECRET：公众帐号secert（仅JSAPI支付的时候需要配置）
         */
 
-        public const string APPID = "wx9b505b46ec6f7d94";
-        public const string MCHID = "1340703201";
-        public const string KEY = "ZWTOchzh0IosT1h29OEQikmSCxMZZx9k";
-        public const string APPSECRET = "b7ebdaee6557b2bb588e6f7035746a91";
+        public static void Config(string appId, string mchid, string key)
+        {
+            APPID = appId;
+            MCHID = mchid;
+            KEY = key;
+        }
+
+        public static string APPID { get;private set; } = "XXX";
+        public static string MCHID { get; private set; } = "XXX";
+        public static string KEY { get; private set; } = "XXX";
+
+
+        public const string APPSECRET = "XXX";
 
         //=======【证书路径设置】===================================== 
         /* 证书路径,注意应该填写绝对路径（仅退款、撤销订单时需要）
         */
-        public const string SSLCERT_PATH = "G:\\VS2017\\Qwerty.Payment\\PayTest\\Cert\\apiclient_cert.p12";
-        public const string SSLCERT_PASSWORD = "1340703201";
+        public const string SSLCERT_PATH = "path";
+        public const string SSLCERT_PASSWORD = "XXX";
 
 
 

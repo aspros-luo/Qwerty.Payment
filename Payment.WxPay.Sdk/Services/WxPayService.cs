@@ -47,6 +47,10 @@ namespace Payment.WxPay.Sdk.Services
         {
             try
             {
+                var appId = "XX";
+                var mchId = "XX";
+                var key = "XX";
+                WxPayConfig.Config(appId,mchId,key);
                 var appPay = new AppPay();
                 var result = await appPay.Run(body, outTradeNo, totalFee);
                 return result == null
