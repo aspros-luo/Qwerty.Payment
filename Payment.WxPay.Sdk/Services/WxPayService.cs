@@ -5,6 +5,7 @@ using Payment.WxPay.Sdk.Lib;
 using Payment.WxPay.Sdk.Request;
 using Payment.WxPay.Sdk.Response;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,14 +56,26 @@ namespace Payment.WxPay.Sdk.Services
                 var result = await appPay.Run(body, outTradeNo, totalFee);
                 return result == null
                     ? new Tuple<bool, string>(false, "返回数据为空！")
-                    : new Tuple<bool, string>(true, result.ToJson());
+                    : new Tuple<bool, string>(true, AppSign(result.ToJson()));
             }
             catch (Exception e)
             {
                 return new Tuple<bool, string>(false, e.Message);
             }
         }
-
+        public string AppSign(string preJson)
+        {
+            var dic = JsonConvert.DeserializeObject<Dictionary<string, string>>(preJson);
+            var data = new WxPayData();
+            data.SetValue("appid", dic["appid"]);
+            data.SetValue("partnerid", dic["mch_id"]);
+            data.SetValue("prepayid", dic["prepay_id"]);
+            data.SetValue("package", "Sign=WXPay");
+            data.SetValue("noncestr", WxPayApi.GenerateNonceStr());
+            data.SetValue("timestamp", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));
+            data.SetValue("sign", data.MakeSign());
+            return data.ToJson();
+        }
         public async Task<Tuple<bool, string>> JsApiPay(string body, string outTradeNo, int totalFee, string openId)
         {
             try

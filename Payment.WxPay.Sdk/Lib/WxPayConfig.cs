@@ -22,6 +22,7 @@ namespace Payment.WxPay.Sdk.Lib
             APPID = appId;
             MCHID = mchid;
             KEY = key;
+            SSLCERT_PASSWORD = mchid;
         }
 
         public static string APPID { get;private set; } = "XXX";
@@ -35,7 +36,7 @@ namespace Payment.WxPay.Sdk.Lib
         /* 证书路径,注意应该填写绝对路径（仅退款、撤销订单时需要）
         */
         public const string SSLCERT_PATH = "path";
-        public const string SSLCERT_PASSWORD = "XXX";
+        public static string SSLCERT_PASSWORD { get; set; } = "XXX";
 
 
 
