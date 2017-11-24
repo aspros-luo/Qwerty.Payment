@@ -72,7 +72,7 @@ namespace Payment.WxPay.Sdk.Services
             data.SetValue("prepayid", dic["prepay_id"]);
             data.SetValue("package", "Sign=WXPay");
             data.SetValue("noncestr", WxPayApi.GenerateNonceStr());
-            data.SetValue("timestamp", DateTime.Now.AddMinutes(10).ToString("yyyyMMddHHmmss"));
+            data.SetValue("timestamp", WxPayApi.GenerateTimeStamp());
             data.SetValue("sign", data.MakeSign());
             return data.ToJson();
         }
