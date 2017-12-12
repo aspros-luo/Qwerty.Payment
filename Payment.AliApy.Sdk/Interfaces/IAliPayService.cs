@@ -38,5 +38,10 @@ namespace Payment.AliPay.Sdk.Interfaces
         /// </summary>
         /// <returns></returns>
         AliNotifyRequest AliNotify(Stream aliReturnData);
+        /// <summary>
+        /// 统一收单线下交易预创建，用于预先生成交易订单，生成二维码，用户扫码后完成支付
+        /// </summary>
+        /// <returns></returns>
+        Task<AliPayRequest> Precreate(AliPrePayModel prePayModel);
     }
 }

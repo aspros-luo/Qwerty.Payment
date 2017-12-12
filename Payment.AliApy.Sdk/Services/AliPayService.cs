@@ -168,5 +168,27 @@ namespace Payment.AliPay.Sdk.Services
                 return new AliNotifyRequest { IsVerify = false, PayNo = "", TradeIds = "", PayTime = "", Sign = "", Content = e.Message };
             }
         }
+
+        public async Task<AliPayRequest> Precreate(AliPrePayModel prePayModel)
+        {
+            var common = new AliPayCommonModel();
+            common.SetMethod("alipay.trade.precreate");
+            common.SetBizContent(prePayModel);
+            var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
+            var str = BuildData.BuildParamStr(parameters);
+
+            var sign = GenerateRsaAssist.RasSign(str, AliPayConfig.PrivateKey, SignType.Rsa2);
+            parameters.Add("sign", sign);
+            try
+            {
+                var response = await HttpUtil.CreatePostHttpResponse(AliPayConfig.Gateway, parameters);
+                var result = await response.Content.ReadAsStringAsync();
+                return new AliPayRequest { IsSuccess = true, PreSign = str, Sign = sign, Result = result };
+            }
+            catch (Exception e)
+            {
+                return new AliPayRequest { IsSuccess = false, PreSign = str, Sign = sign, Result = e.Message };
+            }
+        }
     }
 }

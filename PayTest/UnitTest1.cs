@@ -14,10 +14,10 @@ namespace PayTest
     public class UnitTest1 : BaseTest
     {
         private readonly IAliPayService _aliPayService;
-        private const string AppId = @"XX";
+        private const string AppId = @"X";
 
-        private const string PrivateKey = @"XX";
-        private const string AliPublicKey = @"XX";
+        private const string PrivateKey = @"X";
+        private const string AliPublicKey = @"X";
 
         public UnitTest1(ITestOutputHelper output) : base(output)
         {
@@ -144,6 +144,21 @@ namespace PayTest
         {
             WxPayService a = new WxPayService();
             var s = await a.WeChatRefundQuery("", "", "", "");
+            Assert.NotNull(s);
+        }
+
+        [Fact]
+        public async void Test12()
+        {
+            AliPayService a = new AliPayService();
+            var prePayModel = new AliPrePayModel
+            {
+                out_trade_no = "2",
+                total_amount = "1",
+                discountable_amount = "1",
+                subject = "÷–Œƒ≤‚ ‘"
+            };
+            var s = await a.Precreate(prePayModel);
             Assert.NotNull(s);
         }
     }
