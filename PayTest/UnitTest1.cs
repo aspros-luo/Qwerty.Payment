@@ -14,10 +14,10 @@ namespace PayTest
     public class UnitTest1 : BaseTest
     {
         private readonly IAliPayService _aliPayService;
-        private const string AppId = @"X";
+        private const string AppId = @"x";
 
-        private const string PrivateKey = @"X";
-        private const string AliPublicKey = @"X";
+        private const string PrivateKey = @"x";
+        private const string AliPublicKey = @"x";
 
         public UnitTest1(ITestOutputHelper output) : base(output)
         {
@@ -153,12 +153,24 @@ namespace PayTest
             AliPayService a = new AliPayService();
             var prePayModel = new AliPrePayModel
             {
-                out_trade_no = "2",
-                total_amount = "1",
-                discountable_amount = "1",
+                out_trade_no = "3",
+                total_amount = "0.01",
+                discountable_amount = "0",
                 subject = "÷–Œƒ≤‚ ‘"
             };
             var s = await a.Precreate(prePayModel);
+            Assert.NotNull(s);
+        }
+        [Fact]
+        public async void Test13()
+        {
+            AliPayService a = new AliPayService();
+            var prePayModel = new AliCloseModel
+            {
+                out_trade_no = "3",
+                trade_no = "2017121921001004720268024224",
+            };
+           var s= await  a.AliColse(prePayModel);
             Assert.NotNull(s);
         }
     }

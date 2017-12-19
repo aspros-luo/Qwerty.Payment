@@ -43,5 +43,10 @@ namespace Payment.AliPay.Sdk.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<AliPayRequest> Precreate(AliPrePayModel prePayModel);
+        /// <summary>
+        /// 支付宝关闭交易接口
+        /// </summary>
+        /// <param name="closeModel"></param>
+        Task<string> AliColse(AliCloseModel closeModel);
     }
 }

@@ -190,5 +190,27 @@ namespace Payment.AliPay.Sdk.Services
                 return new AliPayRequest { IsSuccess = false, PreSign = str, Sign = sign, Result = e.Message };
             }
         }
+
+        public async Task<string> AliColse(AliCloseModel closeModel)
+        {
+            var common = new AliPayCommonModel();
+            common.SetMethod("alipay.trade.close");
+            common.SetBizContent(closeModel);
+            var parameters = common.GetType().GetProperties().OrderBy(o => o.Name).ToDictionary(item => item.Name, item => item.GetValue(common).ToString());
+            var str = BuildData.BuildParamStr(parameters);
+
+            var sign = GenerateRsaAssist.RasSign(str, AliPayConfig.PrivateKey, SignType.Rsa2);
+            parameters.Add("sign", sign);
+            try
+            {
+                var response = await HttpUtil.CreatePostHttpResponse(AliPayConfig.Gateway, parameters);
+                var result = await response.Content.ReadAsStringAsync();
+                return result;
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+        }
     }
 }
